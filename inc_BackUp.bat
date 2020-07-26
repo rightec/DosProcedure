@@ -6,11 +6,13 @@ echo %BATCHPATH% is the current directory >CON
 :: *** 2 command line parameters needed
 IF [%2]==[] GOTO Syntax
 
-:: ** first parameter must be a valid file specification
-rem IF NOT EXIST %1 GOTO Syntax
-:: *** first parameter must be a file name, not a directory
-rem DIR /A-D /B %~nx1 2>NUL | FIND /I "%~nx1" >NUL
-rem IF ERRORLEVEL 1 GOTO Syntax
+
+:: ** first parameter must be a valid directory
+PUSHD %1 && POPD || GOTO Syntax
+:: ** Second parameter must be a valid directory
+PUSHD %2 && POPD || GOTO Syntax
+
+
 
 
 SET SOURCEDIR=%1
